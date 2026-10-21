@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gotham SINTA – Direktori Jurnal SINTA 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080c;--panel:#12141b;--line:#262a36;--y:#ffd21f;--t:#eceef4;--m:#9aa1b5;--r:#ff5d5d}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t);font:400 16px/1.6 Barlow,system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,.bn{font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.04em;font-weight:400}
+a{color:var(--y)}
+#sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse at 75% 0,#1b2133 0,transparent 55%),linear-gradient(#07080c,#0c0f17)}
+#sky .moon{position:absolute;top:6%;right:9%;width:min(24vw,170px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff6c9 0,#ffd21f 45%,rgba(255,210,31,.1) 70%);box-shadow:0 0 90px 30px rgba(255,210,31,.25);animation:glow 5s ease-in-out infinite alternate}
+#sky .moon svg{position:absolute;inset:0;width:100%;fill:#07080c}
+#sky .beam{position:absolute;bottom:0;left:50%;width:0;height:0;border-left:70px solid transparent;border-right:70px solid transparent;border-bottom:80vh solid rgba(255,210,31,.06);transform-origin:bottom center;animation:sweep 9s ease-in-out infinite alternate}
+#sky .city{position:absolute;bottom:0;width:100%;height:24vh;opacity:.9}
+.bat{position:absolute;left:-80px;fill:#000;animation:fly linear infinite}
+@keyframes fly{to{transform:translateX(calc(100vw + 160px)) translateY(var(--dy))}}
+@keyframes sweep{from{transform:translateX(-50%) rotate(-24deg)}to{transform:translateX(-50%) rotate(24deg)}}
+@keyframes glow{to{box-shadow:0 0 130px 45px rgba(255,210,31,.35)}}
+main,header,footer{position:relative;z-index:1}
+.wrap{max-width:1150px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;gap:12px;padding:16px 0}
+nav .bn{font-size:1.7rem;color:var(--y)}
+nav svg{width:46px;fill:var(--y)}
+.hero{padding:40px 0 30px;display:grid;gap:26px;grid-template-columns:1.3fr 1fr;align-items:center}
+.hero h1{font-size:clamp(3rem,10vw,6.4rem);line-height:.92;text-shadow:0 0 40px rgba(255,210,31,.25)}
+.hero h1 span{color:var(--y)}
+.hero p{color:var(--m);max-width:52ch;margin-top:14px}
+.id{background:linear-gradient(145deg,#171a24,#0d0f15);border:1px solid var(--line);border-left:5px solid var(--y);border-radius:10px;padding:20px;box-shadow:0 20px 50px #0008}
+.id h3{font-size:1.6rem;color:var(--y)}
+.id dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin-top:10px;font-size:.95rem}
+.id dt{color:var(--m)}
+.stats{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap}
+.stats b{display:block;font:2.6rem 'Bebas Neue';color:var(--y);line-height:1}
+.stats span{color:var(--m);font-size:.85rem}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 14px;position:sticky;top:0;z-index:5;padding:10px 0;background:linear-gradient(var(--bg) 70%,transparent)}
+input,select{background:var(--panel);color:var(--t);border:1px solid var(--line);border-radius:8px;padding:11px 14px;font:inherit;min-width:0}
+input{flex:1 1 240px}
+input:focus,select:focus,button:focus-visible,.card:focus-visible{outline:2px solid var(--y);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;padding-bottom:50px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;cursor:pointer;position:relative;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;display:flex;flex-direction:column;gap:8px}
+.card::after{content:"";position:absolute;right:-14px;bottom:-14px;width:80px;height:50px;opacity:.07;background:var(--y);clip-path:polygon(50% 20%,60% 0,65% 25%,100% 0,90% 45%,100% 75%,70% 60%,50% 100%,30% 60%,0 75%,10% 45%,0 0,35% 25%,40% 0)}
+.card:hover{transform:translateY(-6px) scale(1.02);border-color:var(--y);box-shadow:0 14px 40px rgba(255,210,31,.18)}
+.card h3{font-size:1.45rem;line-height:1.1}
+.tag{display:inline-block;font-size:.78rem;padding:2px 10px;border-radius:99px;border:1px solid var(--y);color:var(--y);width:fit-content}
+.tag.g{border-color:var(--line);color:var(--m)}
+.row{display:flex;gap:6px;flex-wrap:wrap}
+.card p{color:var(--m);font-size:.9rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.meta{font-size:.85rem;display:flex;justify-content:space-between;gap:8px;margin-top:auto;padding-top:8px;border-top:1px dashed var(--line)}
+.empty{grid-column:1/-1;text-align:center;color:var(--m);padding:40px}
+/* detail */
+#detail{position:fixed;inset:0;z-index:20;background:rgba(5,6,9,.94);overflow-y:auto;display:none}
+#detail.on{display:block;animation:zoom .35s cubic-bezier(.2,.9,.3,1.1)}
+@keyframes zoom{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:none}}
+.dh{border-bottom:1px solid var(--line);background:linear-gradient(120deg,#1a1d29,#0a0b10 60%);padding:26px 0 24px}
+.dh h2{font-size:clamp(2.2rem,6vw,4rem);line-height:1;margin:10px 0}
+button{font:inherit;cursor:pointer}
+.back{background:var(--y);color:#000;border:0;border-radius:8px;padding:9px 18px;font-weight:600}
+.btn{display:inline-block;background:transparent;border:1px solid var(--y);color:var(--y);padding:9px 16px;border-radius:8px;text-decoration:none;margin:8px 8px 0 0}
+.btn.p{background:var(--y);color:#000}
+.dg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;padding:26px 0 60px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+.box h3{color:var(--y);font-size:1.4rem;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+td{padding:7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{color:var(--m);width:38%;padding-right:10px}
+.warn{border-left:4px solid var(--r);padding:8px 12px;margin-top:8px;background:#ff5d5d12;font-size:.92rem;border-radius:0 6px 6px 0}
+.wide{grid-column:1/-1}
+footer{padding:30px 0 40px;color:var(--m);font-size:.85rem;border-top:1px solid var(--line);background:#07080ccc}
+@media(max-width:800px){.hero{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><symbol id="bt" viewBox="0 0 120 60"><path d="M60 8l6 8c8-3 14-8 20-16 2 12 8 22 22 26-8 2-12 6-14 12-6-6-14-6-20 2l-6 14h-16l-6-14c-6-8-14-8-20-2-2-6-6-10-14-12C26 22 32 12 34 0c6 8 12 13 20 16z"/></symbol></svg>
+<div id="sky"><div class="moon"><svg viewBox="0 0 120 120"><use href="#bt" y="30" width="120" height="60"/></svg></div><div class="beam"></div>
+<svg class="city" viewBox="0 0 1200 200" preserveAspectRatio="none" fill="#05060a"><path d="M0 200V120h40V90h30v40h30V60h40v70h30V100h50V40h30V20h20v20h30v80h40V80h40v50h30V70h50v60h40V50h30v-20h20v20h30v90h40V90h30v40h50V60h40v70h30V100h40V30h30V10h20v20h30v90h40V80h50v50h40V90h40v40h50V70h30v60h40V100h40v100z"/></svg></div>
+<header><div class="wrap"><nav><svg viewBox="0 0 120 60"><use href="#bt"/></svg><span class="bn">Gotham SINTA</span></nav>
+<section class="hero"><div><h1>Direktori<br><span>Jurnal SINTA 3</span></h1>
+<p>Ringkasan jurnal terakreditasi SINTA 3: biaya, jadwal terbit, bahasa, dan status verifikasi. Pilih satu kartu untuk melihat detail lengkapnya.</p>
+<div class="stats"><div><b id="n1">0</b><span>jurnal terdata</span></div><div><b id="n2">0</b><span>bidang ilmu</span></div><div><b id="n3">0</b><span>gratis biaya publikasi</span></div></div></div>
+<aside class="id"><h3>Profil Penyusun</h3><dl><dt>Nama</dt><dd>Joshua Irawan</dd><dt>Status</dt><dd>Siswa magang PKL, Al Muhtadin Depok</dd><dt>Pembimbing</dt><dd>Pak Riadi Marta Dinata, S.Ti., M.Kom</dd><dt>Jabatan</dt><dd>Kalab Komputer FSTT ISTN</dd><dt>Sumber data</dt><dd><a href="https://sinta.kemdiktisaintek.go.id/journals" target="_blank" rel="noopener">SINTA Kemdiktisaintek</a></dd></dl></aside></section></div></header>
+<main class="wrap"><div class="tools"><input id="q" type="search" placeholder="Cari nama jurnal, ISSN, atau bidang..." aria-label="Cari jurnal"><select id="cat" aria-label="Bidang"></select><select id="sort" aria-label="Urutkan"><option value="n">Nama A–Z</option><option value="a">APC termurah</option><option value="d">Deadline terdekat</option></select></div>
+<div class="grid" id="grid"></div></main>
+<section id="detail" aria-live="polite"></section>
+<footer><div class="wrap">Data diperiksa 21 Oktober 2026. Status Scopus dan quartile belum terverifikasi pada semua jurnal; jangan dicantumkan sebagai fakta tanpa bukti dari Scopus Sources atau SCImago. Verifikasi ulang periode akreditasi lewat <a href="https://sinta.kemdiktisaintek.go.id/journals" target="_blank" rel="noopener">SINTA</a> sebelum dipakai. Disusun oleh Joshua Irawan, PKL Al Muhtadin Depok.</div></footer>
+<script>
+const NV="Belum terverifikasi";
+const J=[
+{n:"Acta Aquatica: Aquatic Sciences Journal",c:"Perairan",i:"2406-9825 / 2614-3178",p:"LPPM Universitas Malikussaleh",s:"Lingkungan perairan tawar, lahan basah dan laut; akuakultur, bioteknologi, hidrologi, biodiversitas, teknologi hasil perikanan.",f:"3x/tahun",m:"April, Agustus, Desember",a:"Rp500.000 (penulis Indonesia); penulis asing gratis",ak:500,l:"Indonesia / Inggris",rv:"Peer review; durasi belum ditemukan",st:"Aktif (Vol. 13 No. 2, Agt 2026)",u:"https://ojs.unimal.ac.id/index.php/acta-aquatica/index",w:["Jumlah reviewer tidak konsisten antar halaman (minimal 1 vs minimal 2). Konfirmasi ke editor."],x:"SINTA 3 (SK 177/E/KPT/2024; cocokkan periode)"},
+{n:"SINERGI POLMED: Jurnal Ilmiah Teknik Mesin",c:"Teknik",i:"2089-7766 / 2777-1202",p:"Polmed Press, Politeknik Negeri Medan",s:"Teknik mesin: konversi energi, energi terbarukan, korosi, material, metalurgi, dinamika fluida, tribologi, bioenergi.",f:"3x/tahun",m:"Februari, Juni, Oktober",a:"Submission Rp0; Rp750.000 jika diterima",ak:750,l:"Indonesia / Inggris",rv:"Durasi belum ditemukan",st:"Aktif (Vol. 7 No. 2, 30 Jun 2026)",u:"https://ojs.polmed.ac.id/index.php/Sinergi",w:["Halaman lain masih menyebut terbit 6 bulanan; gunakan jadwal 3x/tahun.","Tautan template mengembalikan 404; minta ke editor."],x:"SINTA 3 (Vol. 5 No. 2 2024 – Vol. 10 No. 1 2029)"},
+{n:"SIENNA: Journal of Information Systems and Technology",c:"Komputer & AI",i:"2745-987X / 2745-9861",p:"FTIK & LPPM Universitas Muhammadiyah Kotabumi",s:"Sistem informasi, TI, ilmu komputer: tata kelola TI, data mining, keamanan informasi, pemrosesan citra, NLP.",f:"2x/tahun",m:"Juli, Desember",a:"Rp750.000 jika diterima; submission gratis",ak:750,l:"Indonesia / Inggris",rv:"Screening 1 minggu; peer review 2–4 minggu per putaran",st:"Aktif (Vol. 7 No. 1, 2026)",u:"https://jurnal.umko.ac.id/index.php/sienna",dl:"Rolling; kirim paling lambat 2 bulan sebelum terbit",w:[],x:"SINTA 3 (periode belum terverifikasi)"},
+{n:"Indonesian Journal of Artificial Intelligence and Data Mining (IJAIDM)",c:"Komputer & AI",i:"2614-3372 / 2614-6150",p:"Predatech, FST UIN Sultan Syarif Kasim Riau",s:"AI, data mining, machine learning, deep learning, computer vision, NLP, predictive analytics, sistem pendukung keputusan.",f:"3x/tahun",m:"Maret, Juli, November",a:"Rp1.000.000 (Indonesia); USD 60 (internasional)",ak:1000,l:"Inggris",rv:"Double-blind, min. 2 reviewer; durasi belum ditemukan",st:"Aktif (Vol. 9 No. 2, 16 Jul 2026)",u:"https://ejournal.uin-suska.ac.id/index.php/IJAIDM/index",dl:"Maret: 31 Jan 2027; Juli: 30 Mei; November: 30 Sep",dd:"2027-01-31",w:["Deadline 30 September (edisi November 2026) sudah lewat."],x:"SINTA 3 (periode belum terverifikasi)"},
+{n:"Psyche 165 Journal",c:"Psikologi",i:"2088-5326 / 2502-8766",p:"LPPM Universitas Putra Indonesia YPTK Padang",s:"Psikologi terapan: klinis, kognitif, konseling, pendidikan, kesehatan, sosial, industri-organisasi, forensik.",f:"4x/tahun",m:"Maret, Juni, September, Desember (dari pola arsip)",a:"Rp750.000 jika diterima; submission Rp0",ak:750,l:"Indonesia / Inggris",rv:"Rata-rata 6 minggu keputusan pertama, 10 minggu keputusan akhir",st:"Aktif (Vol. 19 No. 2, 4 Jul 2026)",u:"https://jpsy165.org/ojs/index.php/jpsy165",w:["Bulan terbit belum dikonfirmasi lewat halaman frekuensi resmi."],x:"SINTA 3 (periode belum terverifikasi)"},
+{n:"Simetris: Jurnal Teknik Mesin, Industri, Elektro dan Ilmu Komputer",c:"Teknik",i:"2252-4983 / 2549-3108",p:"Fakultas Teknik, Universitas Muria Kudus",s:"Informatika, sistem informasi, teknik mesin, elektro, dan industri.",f:"2x/tahun",m:"April, November",a:"Rp700.000 (ada opsi fast-track)",ak:700,l:"Indonesia / Inggris (Inggris diutamakan)",rv:"Durasi belum ditemukan",st:"Aktif (Vol. 17 No. 1, 29 Apr 2026)",u:"https://jurnal.umk.ac.id/index.php/simet",dl:"30 Apr 2026 untuk edisi Nov 2026 (sudah lewat; konfirmasi editor)",w:["Batas 30 April 2026 sudah lewat."],x:"SINTA 3 (periode belum terverifikasi)"},
+{n:"Jurnal Varian",c:"Matematika",i:"– / 2581-2017",p:"LPPM Universitas Bumigora",s:"Matematika murni dan terapan, statistika, pemodelan, analisis data, regresi.",f:"3x/tahun",m:"Februari, Juni, Oktober",a:"USD 30 (Rp500.000) s.d. 12 halaman; +USD 3 per halaman",ak:500,l:"Inggris (pedoman tidak konsisten)",rv:"Durasi belum ditemukan",st:"Aktif (Vol. 9 No. 2, 30 Jun 2026)",u:"https://journal.universitasbumigora.ac.id/index.php/Varian",w:["p-ISSN belum valid di SINTA (tertulis 0).","Halaman Focus and Scope masih memuat jadwal lama (April, Oktober)."],x:"SINTA 3 (SK 10/C/C3/DT.05.00/2025, 21 Mar 2025)"},
+{n:"Madiun Spoor: Jurnal Pengabdian Masyarakat",c:"Pengabdian",i:"2797-1678 / 2797-0523",p:"P3M Politeknik Perkeretaapian Indonesia Madiun",s:"Pengabdian masyarakat: keselamatan transportasi, pelatihan, teknologi tepat guna, pemberdayaan.",f:"2x/tahun",m:"April, Oktober",a:"Gratis (Rp0)",ak:0,l:"Indonesia / Inggris",rv:"Maksimal sekitar 4 minggu",st:"Aktif (Vol. 6 No. 1, Apr 2026)",u:"https://jurnal.ppi.ac.id/JPM",w:[],x:"SINTA 3 (periode belum terverifikasi)"},
+{n:"Jurnal Riset Akuntansi dan Auditing (JRAA)",c:"Ekonomi",i:"2356-2870 / 2746-9956",p:"STIE Y.A.I, Jakarta",s:"Akuntansi keuangan, SIA, akuntansi pemerintahan, perpajakan, auditing.",f:"2x/tahun",m:"Mei, November",a:"Rp750.000 jika diterima (+ biaya terjemah/proofreading bila berlaku)",ak:750,l:"Inggris (sejak Vol. 12 No. 1, 2025)",rv:"Revisi maksimal 1 bulan; durasi review belum ditemukan",st:"Aktif (Vol. 13 No. 1, 30 Mei 2026)",u:"https://journals.stie-yai.ac.id/index.php/JRAA",w:["Jadwal edisi berikutnya perlu dikonfirmasi."],x:"SINTA 3 (periode belum terverifikasi)"},
+{n:"Ad-Dawaa' Journal of Pharmaceutical Sciences",c:"Kesehatan & Farmasi",i:"2654-7392 / 2654-6973",p:"UIN Alauddin Makassar",s:"Ilmu farmasi: farmakologi, farmasetika, farmakognosi, fitokimia, teknologi farmasi, integrasi Islam.",f:"2x/tahun",m:"Juni, Desember",a:"Rp500.000 (konfirmasi tarif terbaru)",ak:500,l:"Inggris (wajib)",rv:"Double-blind, min. 2 reviewer",st:"Aktif (Vol. 9 No. 1, 30 Jun 2026)",u:"https://journal.uin-alauddin.ac.id/index.php/addawaa",w:[],x:"SINTA 3 (menurut situs jurnal)"},
+{n:"Jurnal Ilmu Perpustakaan (JIPER)",c:"Sosial & Humaniora",i:"2774-7301 / 2716-0432",p:"Prodi Perpustakaan dan Sains Informasi, Universitas Muhammadiyah Mataram",s:"Manajemen perpustakaan, layanan, TI perpustakaan, literasi informasi, arsip, open access, preservasi.",f:"2x/tahun",m:"Maret, September",a:"Rp300.000 atau Rp750.000 (tidak konsisten)",ak:300,l:"Belum terverifikasi",rv:"Durasi belum ditemukan",st:"Aktif (Vol. 8 No. 2, Sep 2026)",u:"https://journal.ummat.ac.id/index.php/JIPER",dl:"Edisi Maret 2027: 28 Feb 2027",dd:"2027-02-28",w:["APC berbeda: Rp300.000 (halaman submission) vs Rp750.000 (Call for Paper 2026).","Jurnal bermigrasi ke portal OJS 3 baru."],x:"SINTA 3 (periode belum terverifikasi)"},
+{n:"AGROVITAL: Jurnal Ilmu Pertanian",c:"Pertanian",i:"2541-7452 / 2541-7460",p:"LPPM Universitas Al Asyariah Mandar",s:"Budidaya tanaman, pemuliaan, bioteknologi pertanian, hama penyakit, pascapanen, kesuburan tanah, sosial ekonomi, ternak.",f:"2x/tahun",m:"Mei, November",a:"Rp800.000 jika diterima; fast-track s.d. Rp500.000 tambahan",ak:800,l:"Belum terverifikasi",rv:"Fast-track 1–7 hari; reguler belum diketahui",st:"Aktif (Vol. 11 No. 1, Mei 2026)",u:"https://journal.lppm-unasman.ac.id/index.php/agrovital/index",w:[],x:"SINTA 3 (SK 0110/C3/DT.05.00/2026, 3 Feb 2026)"},
+{n:"Jurnal Kependidikan: Penelitian Inovasi Pembelajaran",c:"Pendidikan",i:"2580-5525 / 2580-5533",p:"Universitas Negeri Yogyakarta",s:"Penelitian pendidikan dan inovasi pembelajaran: matematika, sains, bahasa, olahraga, kejuruan, ekonomi.",f:"2x/tahun",m:"Mei (edisi 1); edisi 2 belum dipastikan",a:"Rp1.500.000 jika diterima",ak:1500,l:"Inggris",rv:"Durasi belum ditemukan",st:"Aktif (Vol. 10 No. 1, 2 Mei 2026)",u:"https://journal.uny.ac.id/index.php/jk",w:["Bulan terbit edisi kedua belum dapat dipastikan."],x:"SINTA 3 (profil resmi SINTA)"},
+{n:"INFOTEKMESIN",c:"Teknik",i:"2087-1627 / 2685-9858",p:"P3M Politeknik Negeri Cilacap",s:"Informatika, teknik elektro, dan teknik mesin: sistem informasi, otomasi, manufaktur, material, termofluida.",f:"2x/tahun",m:"Januari, Juli",a:"Rp400.000 jika diterima; submission gratis",ak:400,l:"Indonesia / Inggris",rv:"Blind review min. 2 reviewer; hasil diberitahukan 30 Des (edisi Jan) / 30 Jun (edisi Jul)",st:"Aktif (Vol. 17 No. 2, 31 Jul 2026)",u:"https://ejournal.pnc.ac.id/index.php/infotekmesin",dl:"30 November 2026 (edisi Januari 2027)",dd:"2026-11-30",w:[],x:"SINTA 3 (SK 295/C/C3/KPT/2026)"},
+{n:"JETI – Journal of Education Technology & Innovation",c:"Pendidikan",i:"2621-2137 / 2621-2080",p:"Pascasarjana Universitas PGRI Argopuro Jember",s:"Teknologi pendidikan: e-learning, AI/VR/AR, pembelajaran daring, learning analytics, gamifikasi.",f:"2x/tahun",m:"Juni, Desember",a:"Rp750.000 (Indonesia); USD 70 (non-Indonesia)",ak:750,l:"Inggris (wajib)",rv:"Double-blind, min. 2 reviewer",st:"Arsip terakhir yang terkonfirmasi: Vol. 8 No. 2 (2025)",u:"http://jurnal.unipar.ac.id/index.php/jeti",w:["Periode SINTA 3 berbeda: 2020–2025 (About) vs 2025–2029 (beranda).","Beranda OJS sempat error 403 saat diperiksa."],x:"SINTA 3 (periode belum pasti)"},
+{n:"Jurnal Teknika (Universitas Islam Lamongan)",c:"Teknik",i:"2085-0859 / 2620-4770",p:"Fakultas Teknik, Universitas Islam Lamongan",s:"Informatika, AI dan sains data, RPL, jaringan, IoT, teknik sipil, transportasi, sumber daya air, elektro.",f:"2x/tahun",m:"Maret, September",a:"Rp800.000 jika diterima (tarif Sep 2026)",ak:800,l:"Indonesia / Inggris",rv:"Double-blind; durasi belum ditemukan",st:"Aktif (Vol. 18 No. 2, 18 Sep 2026)",u:"https://jurnalteknik.unisla.ac.id/index.php/teknika",dl:"Menerima naskah kapan saja",w:["Beranda menyebut quarterly, halaman frekuensi menyebut 2 edisi/tahun."],x:"SINTA 3 (s.d. Vol. 19 No. 1, 2027)"},
+{n:"HESMED: Journal of Health Sciences and Medical Development",c:"Kesehatan & Farmasi",i:"2962-5769 / 2962-0007",p:"Indonesian Institute of Science and Technology Research (IISTR)",s:"Kesehatan masyarakat, informatika kesehatan, promosi kesehatan, keselamatan pasien, nutrisi, epidemiologi.",f:"3x/tahun",m:"April, Agustus, Desember",a:"USD 60 / Rp1.000.000 (waiver bisa diajukan)",ak:1000,l:"Inggris",rv:"Sekitar 2–12 minggu",st:"Aktif (Vol. 5 No. 2, 3 Agt 2026)",u:"https://journal.iistr.org/index.php/HESMED",w:["Peringkat SINTA tidak ditemukan bukti resminya.","Pengumuman deadline 2022 tidak boleh dipakai tanpa konfirmasi editor."],x:"Belum terverifikasi"},
+{n:"Jurnal Sains Agribisnis (JSA)",c:"Pertanian",i:"– / 2527-9238",p:"Prodi Agribisnis, Universitas Muhammadiyah Sidenreng Rappang",s:"Agribisnis, ekonomi pertanian, penyuluhan, kelembagaan, kewirausahaan.",f:"2x/tahun",m:"Juni, Desember",a:"Rp600.000 jika diterima (berlaku sejak Juni 2026)",ak:600,l:"Indonesia / Inggris",rv:"Fast-track 5–6 hari kerja; reguler belum diketahui",st:"Aktif (Vol. 6 No. 1, 25 Jun 2026)",u:"https://jurnal.umsrappang.ac.id/jsa",w:["p-ISSN tidak ditemukan; jangan diisi dengan dugaan."],x:"SINTA 3 (SK 295/C/C3/KPT/2026)"},
+{n:"Masyarakat Madani: Jurnal Kajian Islam dan Pengembangan Masyarakat",c:"Sosial & Humaniora",i:"2338-607X / 2656-7741",p:"UIN Sultan Syarif Kasim Riau",s:"Dakwah dan pengembangan masyarakat Islam: pemberdayaan, lembaga keagamaan, kewirausahaan sosial.",f:"2x/tahun",m:"Juni, Desember",a:"Rp1.000.000 (naskah diajukan sejak Jan 2026 dan diterima)",ak:1000,l:"Indonesia / Inggris",rv:"Double-blind; batas kemiripan 25%",st:"Aktif (Vol. 11 No. 1, 6 Jul 2026)",u:"https://ejournal.uin-suska.ac.id/index.php/jmm",w:["Peringkat SINTA belum dapat dipastikan."],x:"Belum terverifikasi"},
+{n:"Indonesian Journal of Chemical Studies (IJCS)",c:"Kimia",i:"2830-778X / 2830-7658",p:"Indonesian Scholar Society bersama Himpunan Kimia Indonesia",s:"Kimia organik, anorganik, fisik, analitik, material, produk alam, lingkungan, bahan energetik.",f:"2x/tahun",m:"Juni, Desember",a:"USD 50 (± Rp825.000); submission USD 0",ak:825,l:"Inggris",rv:"Peer-reviewed; durasi belum ditemukan",st:"Aktif (Vol. 5 No. 1, Jun 2026)",u:"https://journal.solusiriset.com/index.php/ijcs",w:["Peringkat SINTA 3 bersumber dari pengumuman 2025; periode terbaru belum terverifikasi.","Teknik kimia dan pendidikan kimia di luar scope."],x:"SINTA 3 (periode belum terverifikasi)"},
+{n:"Mobile and Forensics (MF)",c:"Komputer & AI",i:"2656-6257 / 2714-6685",p:"Universitas Ahmad Dahlan",s:"Digital forensics, keamanan siber, mobile dan IoT, AI, computer vision, rekayasa perangkat lunak.",f:"2x/tahun",m:"Maret, September",a:"Rp700.000 (Indonesia); USD 48 (luar negeri)",ak:700,l:"Inggris",rv:"Peer-reviewed",st:"Aktif (Vol. 8 No. 2, 2026)",u:"https://journal2.uad.ac.id/index.php/mf",w:["Artikel MF dikutip jurnal Scopus tidak berarti MF terindeks Scopus."],x:"SINTA 3 (Vol. 4 No. 1 2022 – Vol. 8 No. 2 2026)"}
+];
+const $=s=>document.querySelector(s),g=$("#grid"),d=$("#detail");
+const rp=n=>n?"Rp"+n.toLocaleString("id-ID"):"Gratis";
+$("#n1").textContent=J.length;
+const cats=[...new Set(J.map(j=>j.c))].sort();
+$("#n2").textContent=cats.length;
+$("#n3").textContent=J.filter(j=>j.ak===0).length;
+$("#cat").innerHTML='<option value="">Semua bidang</option>'+cats.map(c=>`<option>${c}</option>`).join("");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function render(){
+ const q=$("#q").value.toLowerCase(),c=$("#cat").value,s=$("#sort").value;
+ let L=J.map((j,k)=>({...j,k})).filter(j=>(!c||j.c===c)&&(j.n+j.i+j.c+j.s).toLowerCase().includes(q));
+ L.sort((a,b)=>s==="a"?a.ak-b.ak:s==="d"?(a.dd||"9").localeCompare(b.dd||"9"):a.n.localeCompare(b.n));
+ g.innerHTML=L.length?L.map(j=>`<article class="card" tabindex="0" role="button" data-k="${j.k}"><div class="row"><span class="tag">${esc(j.x.split(" (")[0])}</span><span class="tag g">${esc(j.c)}</span></div><h3>${esc(j.n)}</h3><p>${esc(j.s)}</p><div class="meta"><span>${esc(j.f)} · ${esc(j.m.split(" (")[0])}</span><b>${j.ak===0?"Gratis":rp(j.ak)}</b></div></article>`).join(""):'<div class="empty">Tidak ada jurnal yang cocok. Ubah kata kunci atau bidang.</div>';
+}
+function open(k,push){
+ const j=J[k];
+ const r=(a,b)=>`<tr><td>${a}</td><td>${esc(b)}</td></tr>`;
+ d.innerHTML=`<div class="dh"><div class="wrap"><button class="back" id="bk">&larr; Kembali ke daftar</button><div class="row" style="margin-top:14px"><span class="tag">${esc(j.x.split(" (")[0])}</span><span class="tag g">${esc(j.c)}</span><span class="tag g">${esc(j.st)}</span></div><h2>${esc(j.n)}</h2><a class="btn p" href="${j.u}" target="_blank" rel="noopener">Buka situs jurnal</a><a class="btn" href="https://sinta.kemdiktisaintek.go.id/journals" target="_blank" rel="noopener">Cari di SINTA</a></div></div>
+ <div class="wrap dg"><div class="box wide"><h3>Ruang lingkup</h3><p>${esc(j.s)}</p></div>
+ <div class="box"><h3>Identitas</h3><table>${r("p-ISSN / e-ISSN",j.i)}${r("Penerbit",j.p)}${r("Akreditasi",j.x)}${r("Scopus",NV)}${r("Quartile (SJR)",NV)}</table></div>
+ <div class="box"><h3>Terbit dan biaya</h3><table>${r("Frekuensi",j.f)}${r("Bulan terbit",j.m)}${r("APC",j.a)}${r("Bahasa",j.l)}${r("Deadline",j.dl||"Tidak ditemukan tenggat tetap")}</table></div>
+ <div class="box"><h3>Proses dan status</h3><table>${r("Review",j.rv)}${r("Status",j.st)}${r("Diperiksa","21 Oktober 2026")}</table></div>
+ <div class="box"><h3>Catatan penulis</h3><p>Pastikan APC, template, dan jadwal langsung ke situs jurnal sebelum submit. Peringkat SINTA tidak sama dengan indeks Scopus.</p>${(j.w||[]).map(x=>`<div class="warn">${esc(x)}</div>`).join("")}</div></div>`;
+ d.classList.add("on");d.scrollTop=0;document.body.style.overflow="hidden";
+ if(push)location.hash="j"+k;
+ $("#bk").onclick=close;$("#bk").focus();
+}
+function close(){d.classList.remove("on");document.body.style.overflow="";if(location.hash)history.pushState("",document.title,location.pathname+location.search)}
+g.addEventListener("click",e=>{const c=e.target.closest(".card");if(c)open(+c.dataset.k,1)});
+g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){const c=e.target.closest(".card");if(c){e.preventDefault();open(+c.dataset.k,1)}}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&d.classList.contains("on"))close()});
+["q","cat","sort"].forEach(i=>$("#"+i).addEventListener("input",render));
+function route(){const m=location.hash.match(/^#j(\d+)$/);m&&J[+m[1]]?open(+m[1]):(d.classList.remove("on"),document.body.style.overflow="")}
+addEventListener("hashchange",route);
+render();route();
+// bats
+const sky=$("#sky");
+for(let i=0;i<7;i++){const b=document.createElementNS("http://www.w3.org/2000/svg","svg");b.setAttribute("viewBox","0 0 120 60");b.classList.add("bat");const w=24+Math.random()*34;b.style.cssText=`width:${w}px;top:${6+Math.random()*45}%;--dy:${(Math.random()-.5)*120}px;animation-duration:${14+Math.random()*16}s;animation-delay:-${Math.random()*25}s`;b.innerHTML='<use href="#bt"/>';sky.appendChild(b)}
+</script></body></html>
